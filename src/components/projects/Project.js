@@ -1,4 +1,4 @@
-import React,{useContext} from 'react'
+import React,{useState,useContext} from 'react'
 import myContext from '../../Context'
 import {Card,Container} from '@mui/material'
 import { styled } from '@mui/material/styles';
@@ -12,6 +12,8 @@ import Paper from '@mui/material/Paper';
 import { StarOutlined, DownOutlined,SearchOutlined,CaretDownOutlined,CaretUpOutlined  } from '@ant-design/icons';
 import { Menu, Dropdown, Button, Input } from "antd";
 import './Project.css'
+import Dummy from './Dummy';
+import {Link} from 'react-router-dom'
 
 
 
@@ -170,7 +172,8 @@ const menuOne = (
   );
 function Project() {
     const context=useContext(myContext)
-  
+
+    
     return (
         <Container className={context.state.collapsed ? 'projectWidthCollapsed' :'projectWidth'}>
             <div>
@@ -208,31 +211,30 @@ function Project() {
         <Card><h1 style={{color:"grey",marginLeft:"5px"}}>Projects</h1></Card>
          
         <TableContainer component={Paper}>
-         <Table >
-        
-        <TableHead >
-          
+         <Table >   
+        <TableHead >   
           <TableRow >
             <StyledTableCell className='table' >NAME</StyledTableCell>
             <StyledTableCell className='table' align="left">CLIENT</StyledTableCell>
             <StyledTableCell className='table' align="left">TRACKED</StyledTableCell>
-            <StyledTableCell className='table' align="left">ACCESS</StyledTableCell>
-            <StyledTableCell className='table' align="left">FAVOURITES</StyledTableCell>
+            {/* <StyledTableCell className='table' align="left">ACCESS</StyledTableCell> */}
+            {/* <StyledTableCell className='table' align="left">FAVOURITES</StyledTableCell> */}
           </TableRow>
-        </TableHead>
+        </TableHead>      
         <TableBody>
           {rows.map((row) => (
             <StyledTableRow key={row.name}>
-              <StyledTableCell component="th" scope="row">
+              <Link to ='/dummy'>
+             <StyledTableCell component="th" scope="row" >
                 {row.name}
-              </StyledTableCell>
+              </StyledTableCell> 
+              </Link>
               <StyledTableCell align="left">{row.client}</StyledTableCell>
               <StyledTableCell align="left">{row.tracked}</StyledTableCell>
               <StyledTableCell align="left">{row.access}</StyledTableCell>
-              <StyledTableCell align="left">{row.favourites}</StyledTableCell>
-              <StyledTableCell align="left">{row.star}</StyledTableCell>
-            </StyledTableRow>
-          ))}
+              {/* <StyledTableCell align="left">{row.favourites}</StyledTableCell> */}
+            </StyledTableRow>    
+          ))}     
         </TableBody>
       </Table>
     </TableContainer>

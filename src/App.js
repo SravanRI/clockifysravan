@@ -9,6 +9,7 @@ import Team from './components/Team/Team';
 import Clients from './components/Clients/Clients';
 import myContext from './Context';
 import Timesheet from './components/TimeSheet/Timesheet';
+import Dummy from './components/projects/Dummy';
 
 export class App extends Component {
   static contextType=myContext
@@ -20,12 +21,6 @@ export class App extends Component {
     }
   }
 
-  // handleClick=()=>{
-  //   this.setState({
-  //     name:'ajay'
-  //   })
-  // }
-  
   setContextState = (obj) => {
 		console.log('setContextState function', obj);
 		this.setState({ ...obj }, () =>
@@ -53,6 +48,7 @@ export class App extends Component {
        <Route path="/project" element={<Project/>} />
        <Route path="/clients" element={<Clients />} />
        <Route path="/team" element={<Team />} />
+       <Route path="/dummy" element={<Dummy />}></Route>
        </>
      
       </Routes>

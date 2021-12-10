@@ -1,0 +1,18 @@
+.member-styles {
+    margin-top:1rem;
+    margin-left:7rem;
+    /* background-color:grey; */
+    color: rgb(94, 89, 89);
+    padding:5px
+}
+
+.member-clickstyles {
+    background-color: white;
+    border-bottom:none;
+}
+
+.option {
+    width: 1500px;
+    border: none;
+    margin-left: 5px;
+}
