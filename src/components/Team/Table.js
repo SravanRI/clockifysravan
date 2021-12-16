@@ -1,4 +1,4 @@
-import  React,{useEffect} from 'react';
+import  React,{useState,useEffect} from 'react';
 import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -12,19 +12,20 @@ import { DownOutlined } from '@ant-design/icons';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import axios from 'axios'
 import './Team.css'
+import {Button } from "antd";
 
 const columns = [
   { id: 'name', label: 'Name', minWidth: 170 },
-  { id: 'Email', label: 'Email', minWidth: 100 },
+  { id: 'email', label: 'Email', minWidth: 100 },
   {
-    id: 'Role',
+    id: 'role',
     label: 'Role',
     minWidth: 80,
     align: 'right',
     format: (value) => value.toLocaleString('en-US'),
   },
   {
-    id: 'Group',
+    id: 'group',
     label: 'Group',
     minWidth: 170,
     align: 'right',
@@ -32,19 +33,19 @@ const columns = [
   }
 ];
 
-function createData(name, Email, Role, Group) {
-  return { name, Email, Role, Group };
-}
+// function createData(name, Email, Role, Group) {
+//   return { name, Email, Role, Group };
+// }
 
-const rows = [
-  createData('(not joined yet)', 'ansha@theretailinsights.com', <button>Admin</button>,''),
-  createData('Chandra Shekar MV', 'chandrashekar@theretailinsights.com', '', <button>Recruitment</button>),
-  createData('NS Nagarjuna Naidu', 'nagarjuna@theretailinsights.com','', <button>Recruitment</button>),
-  createData('Santhoshk N7', 'santhoshk.n7@gmail.com', <button>Owner</button>, ''),
-  createData('(not joined yet)', 'shahid@theretailinsights.com', '', <button>Freshers</button>),
-  createData('Sravan Kumar Reddy (you)', 'sravan@theretailinsights.com', '', <button>Freshers</button>),
-  createData('vengala reddy', 'vengalareddy@theretailinsights.com','', <button>Freshers</button>)
-];
+// const rows = [
+//   createData('(not joined yet)', 'ansha@theretailinsights.com', <button>Admin</button>,''),
+//   createData('Chandra Shekar MV', 'chandrashekar@theretailinsights.com', '', <button>Recruitment</button>),
+//   createData('NS Nagarjuna Naidu', 'nagarjuna@theretailinsights.com','', <button>Recruitment</button>),
+//   createData('Santhoshk N7', 'santhoshk.n7@gmail.com', <button>Owner</button>, ''),
+//   createData('(not joined yet)', 'shahid@theretailinsights.com', '', <button>Freshers</button>),
+//   createData('Sravan Kumar Reddy (you)', 'sravan@theretailinsights.com', '', <button>Freshers</button>),
+//   createData('vengala reddy', 'vengalareddy@theretailinsights.com','', <button>Freshers</button>)
+// ];
 
 
 const menu = (
@@ -69,27 +70,57 @@ const menu = (
   // </select>
 
 export default function ColumnGroupingTable() {
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(10);
+  // const [page, setPage] = React.useState(0);
+  // const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
-  const handleChangePage = (event, newPage) => {
-    setPage(newPage);
-  };
 
-  const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(+event.target.value);
-    setPage(0);
-  };
 
-  const menuHandler = (e) => {
-   <div>
-    <option className='option'>Show all</option>
-    <option>SHow active</option>
-    <option>Show inactive</option>
-    <option>Show all</option>
-    </div>  
+  const [userData,setUserData] = useState([])
+    const [userSearchData,setUserSearchData] = useState([])
+    const [name,setName] = useState()
 
+    useEffect(() => {
+      const data = [
+          {name:'Recruitment', email:'Retail HR', role:'32.56h', group: '-'},
+          {name:'Freshers', email:'Retail Freshers', role:'56.3h',group: '-'},
+         {name:'unsa', email:' dasa', role:'56.3h', group:'-'},
+          {name:'fcdfa',email: 'dasa ', role:'56.3h',group: '-'}
+        
+        ];
+        
+        setUserData(data)
+        setUserSearchData(data)
+
+  },[])
+
+    const handleSearch =() => {
+      // debugger
+      const newData = userData
+      .filter(x => x.name == (name== '' ? x.name : name))
+      // .filter(y => y.email == (email == '' ? y.email : email))
+      // .filter(y => y.profession == (profession == '' ? y.profession : profession))
+      setUserSearchData(newData)
   }
+  
+
+  // const handleChangePage = (event, newPage) => {
+  //   setPage(newPage);
+  // };
+
+  // const handleChangeRowsPerPage = (event) => {
+  //   setRowsPerPage(+event.target.value);
+  //   setPage(0);
+  // };
+
+  // const menuHandler = (e) => {
+  //  <div className='members-dropdown'>
+  //   <option className='option'>Show all</option>
+  //   <option>Show active</option>
+  //   <option>Show inactive</option>
+  //   <option>Show all</option>
+  //   </div>  
+
+  // }
 
 
 //   useEffect(() => {
@@ -114,7 +145,7 @@ export default function ColumnGroupingTable() {
   return (
       <>
     {/* <button style={{marginTop:'1rem',marginLeft:'7rem',width:'90px',padding:'5px'}}>Show All  */}
-    <select style={{marginTop:'1rem',marginLeft:'7rem',width:'90px',padding:'8px'}}>
+    <select className='members-dropdown'>
     <option className='option'>Show all</option>
     <option>Show active</option>
     <option>Show inactive</option>
@@ -127,8 +158,10 @@ export default function ColumnGroupingTable() {
     </a>
     </Dropdown> */}
     {/* </button> */}
-    {/* <input type = "search" placeholder="search by email" style={{marginLeft:'20px',width:'16rem',border:'1px solid black'}}/> */}
-    <Paper sx={{ width: '90%' }} style={{marginTop:'1rem',marginLeft:'7rem'}}>
+    <input type = "search" placeholder="search by name or email" className="members-searchbar"     onChange ={(e) => setName(e.target.value)}/>
+    <Button style={{marginLeft:"10rem"}} type="primary" onClick = {handleSearch}>APPLY FILTER</Button>
+
+    <Paper sx={{ width: '90%' }}>
       <TableContainer sx={{ maxHeight: 400 }}>
         <Table stickyHeader aria-label="sticky table">
           <TableHead >
@@ -151,13 +184,10 @@ export default function ColumnGroupingTable() {
           </TableHead>
           <TableBody>
 
-  
-
-
-
-
-            {/* {rows
-              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+            {
+            userSearchData && userSearchData.length>0 ?
+             userSearchData
+              // .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((row) => {
                 return (
                   <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
@@ -172,8 +202,11 @@ export default function ColumnGroupingTable() {
                       );
                     })}
                   </TableRow>
-                );
-              })} */}
+                )
+              })
+            :''
+            }
+            
           </TableBody>
         </Table>
       </TableContainer>

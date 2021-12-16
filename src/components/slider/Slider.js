@@ -26,9 +26,26 @@ class SiderDemo extends React.Component {
     });
   };
    
-    
 
+
+  questionHandle = () => {
+    return (
+      <div>
+        <select>
+        <h3>Documentation</h3>
+        <h3>Documentation</h3>
+        <h3>Documentation</h3>
+        </select>
+      </div>
+    )
+  }
+    
   render() {
+
+
+
+  
+
     return (
       <Layout>
         <Sider style={{height:"100vh",position:"fixed"}} trigger={null} collapsible collapsed={this.context.state.collapsed}>
@@ -57,7 +74,8 @@ class SiderDemo extends React.Component {
             </div>
             <div><h1  style={{color:"white",fontSize:"1.5rem"}}>RI-Tracker</h1></div>
             <div style={{display:"flex"}}>
-            <p style={{fontSize:"20px",marginLeft:"30px",color:"white",paddingTop:"5px",cursor:"pointer"}}> <QuestionOutlined /></p>
+      
+            <p style={{fontSize:"20px",marginLeft:"30px",color:"white",paddingTop:"5px",cursor:"pointer"}} onClick={this.questionHandle}> <QuestionOutlined /></p>
             <p style={{fontSize:"20px",marginLeft:"30px",color:"white",paddingTop:"5px",cursor:"pointer"}}> <BellOutlined  /></p>
             <Avatar style={{marginLeft:"30px",color:"white",marginTop:"20px",cursor:"pointer"}} alt="user" src="./images/user.png"></Avatar>
             </div>

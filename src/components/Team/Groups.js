@@ -8,6 +8,10 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import axios from 'axios'
+import SortIcon from '@mui/icons-material/Sort';
+import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+import './Team.css'
 
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -41,6 +45,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 export default function CustomizedTables() {
     const [groupData,setGroupData] = useState([])
+    const [sortType,setSortType] = useState('asc')
 
     useEffect(() => {
         var config = {
@@ -60,23 +65,30 @@ export default function CustomizedTables() {
       });
       },[])
 
-      const sorted = groupData.sort()
+
+      // const sorted = groupData.sort()
+      
+   const sorted = groupData.sort( (a,b) => {
+     const isReversed = (sortType === 'asc') ? 1 :-1
+     return isReversed * a.name.localeCompare(b.name)
+   })
       
      
   return (
-    <TableContainer component={Paper} style={{marginTop:'2rem',marginLeft:'7rem',width:'90%'}}>
-      <Table sx={{ minWidth: 700 }} aria-label="customized table">
-        <TableHead>
+    <TableContainer component={Paper} >
+      <Table  aria-label="customized table">
+        <TableHead className="groups-row-border">
           <TableRow>
-            <StyledTableCell style={{border:1}}>Groups</StyledTableCell>
+            <StyledTableCell style ={{border:1}}>Groups</StyledTableCell>
             {/* <StyledTableCell align="right"></StyledTableCell>
             <StyledTableCell align="right"></StyledTableCell>
             <StyledTableCell align="right"></StyledTableCell> */}
             {/* <StyledTableCell align="right">Protein&nbsp;(g)</StyledTableCell> */}
           </TableRow>
           <TableRow>
-          <StyledTableCell align='left'>Name</StyledTableCell>
-          <StyledTableCell align="right" style={{marginLeft:'13rem'}}>Access</StyledTableCell>
+          <StyledTableCell align='left'> Name <span><ArrowDropUpIcon className="arrow-dropup" onClick={() => {setSortType('asc')}}/></span><span><ArrowDropDownIcon className='arrow-dropdown' onClick={() => {setSortType('desc')}}/></span>
+          </StyledTableCell>
+          <StyledTableCell className="access">Access</StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>  

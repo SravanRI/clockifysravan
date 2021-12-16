@@ -114,7 +114,8 @@ export default function Tasks() {
   return (
       <>
     {/* <button style={{marginTop:'1rem',marginLeft:'7rem',width:'90px',padding:'5px'}}>Show All  */}
-    <select style={{marginTop:'1rem',marginLeft:'7rem',width:'90px',padding:'8px'}}>
+    <div className = "tasks-header-part">
+    <select className='tasks-dropdown'>
     <option className='option'>Show all</option>
     <option>Show active</option>
     <option>Show inactive</option>
@@ -127,14 +128,18 @@ export default function Tasks() {
     </a>
     </Dropdown> */}
     {/* </button> */}
-    <input type = "search" placeholder="search by email" style={{marginLeft:'20px',width:'16rem',border:'1px solid black'}}/>
-    <Paper sx={{ width: '90%' }} style={{marginTop:'1rem',marginLeft:'7rem'}}>
+    <input type = "search" placeholder="search by name or email" className="tasks-searchbar"/>
+
+    <input type = "search" placeholder="Add task" className='tasks-addtask'/>
+    <button className="addbutton">Add</button>
+    </div>
+    <Paper sx={{ width: '90%' }}>
       <TableContainer sx={{ maxHeight: 400 }}>
         <Table stickyHeader aria-label="sticky table">
           <TableHead >
             <TableRow>
               <TableCell align="end" colSpan={5}>
-                Members
+                Tasks
               </TableCell>
             </TableRow>
             <TableRow>
@@ -151,6 +156,7 @@ export default function Tasks() {
           </TableHead>
           <TableBody>
 
+  
   
 
 

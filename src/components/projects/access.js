@@ -62,7 +62,44 @@ export default function Access() {
       
      
   return (
-    <TableContainer component={Paper} style={{marginTop:'2rem',marginLeft:'7rem',width:'90%'}}>
+      <>
+      <div>
+    <TableContainer component={Paper} >
+      <Table sx={{ minWidth: 700 }} aria-label="customized table">
+        <TableHead>
+          <TableRow>  
+              <TableCell align="end" colSpan={5}>
+                Users
+              </TableCell>
+            </TableRow>
+            {/* <StyledTableCell style={{border:1}}>Groups</StyledTableCell> */}
+            {/* <StyledTableCell align="right"></StyledTableCell>
+            <StyledTableCell align="right"></StyledTableCell>
+            <StyledTableCell align="right"></StyledTableCell> */}
+            {/* <StyledTableCell align="right">Protein&nbsp;(g)</StyledTableCell> */}
+        
+          <TableRow>
+          <StyledTableCell align='left'>Name</StyledTableCell>
+          <StyledTableCell className="access">Access</StyledTableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>  
+        {
+            groupData.map((items) => (
+            <StyledTableRow key={items.name}>
+              <StyledTableCell component="th" scope="row">
+                {items.name}
+              </StyledTableCell>
+              <StyledTableCell align="center">{items.access}</StyledTableCell>
+            </StyledTableRow>
+          ))}
+
+        </TableBody>
+      </Table>
+    </TableContainer>
+    </div>
+    <div style={{marginTop:'2rem'}}>
+        <TableContainer component={Paper} >
       <Table sx={{ minWidth: 700 }} aria-label="customized table">
         <TableHead>
           <TableRow>  
@@ -91,10 +128,13 @@ export default function Access() {
               <StyledTableCell align="center">{items.access}</StyledTableCell>
             </StyledTableRow>
           ))}
-          
+
         </TableBody>
       </Table>
     </TableContainer>
+    </div>
+    </>
+    
   );
 }
 

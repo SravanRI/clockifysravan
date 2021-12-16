@@ -1,4 +1,4 @@
-import React,{useState,useContext} from 'react'
+import React,{useState,useEffect,useContext} from 'react'
 import myContext from '../../Context'
 import {Card,Container} from '@mui/material'
 import { styled } from '@mui/material/styles';
@@ -14,6 +14,8 @@ import { Menu, Dropdown, Button, Input } from "antd";
 import './Project.css'
 import Dummy from './Dummy';
 import {Link} from 'react-router-dom'
+import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 
 
 
@@ -170,16 +172,55 @@ const menuOne = (
       </Menu.Item>
     </Menu>
   );
+
+
+
 function Project() {
     const context=useContext(myContext)
 
+    const [sortType,setSortType] = useState('asc')
+    const [userData,setUserData] = useState([])
+    const [userSearchData,setUserSearchData] = useState([])
+    const [name,setName] = useState()
     
+
+
+    useEffect(() => {
+      const data = [
+          {name:'Recruitment', client:'Retail HR', tracked:'32.56h', access: '-', favourites:'public'},
+          {name:'Freshers', client:'Retail Freshers', tracked:'56.3h',access: '-', favourites:'public'},
+         {name:'unsa', client:' dasa', tracked:'56.3h', access:'-', favourites:'public'},
+          {name:'fcdfa',client: 'dasa ', tracked:'56.3h',access: '-', favourites:'public'}
+        
+        ];
+        
+        setUserData(data)
+        setUserSearchData(data)
+
+  },[])
+
+  const handleSearch =() => {
+    // debugger
+    const newData = userData
+    .filter(x => x.name == (name== '' ? x.name : name))
+    // .filter(y => y.profession == (profession == '' ? y.profession : profession))
+    setUserSearchData(newData)
+}
+
+
+    const sorted = userSearchData.sort( (a,b) => {
+    const isReversed = (sortType === 'asc') ? 1 :-1
+    return isReversed * a.name.localeCompare(b.name)
+           
+          })
+
+
     return (
         <Container className={context.state.collapsed ? 'projectWidthCollapsed' :'projectWidth'}>
             <div>
-                <h1 style={{marginTop:"5rem"}}>Projects</h1>
+                <h1 className='projects-heading'>Projects</h1>
             </div>
-            <Card style={{marginTop:"5rem",marginBottom:"3rem",padding:"1rem"}}>
+            <Card className="menu-card">
             <Dropdown overlay={menuOne}>
                 <Button style={{marginLeft:"20px"}}>
                    Active<DownOutlined />
@@ -200,41 +241,45 @@ function Project() {
                    Billing <DownOutlined />
                 </Button>
             </Dropdown>
-            
-            <SearchOutlined style={{fontSize:"1.2rem",marginLeft:"2rem",marginTop:"2px"}} />
-            <input style={{border:"none",height:"30px",width:"200px",fontSize:"1rem",marginLeft:"5px"}} type="text"  placeholder="Project name"/>
-            <Button style={{marginLeft:"10rem"}} type="primary">APPLY FILTER</Button>
-            
 
+            <SearchOutlined className='search-icon' />
+            <input className='search-bar' type="text"  placeholder="Project name" onChange ={(e) => setName(e.target.value)}/>
+            <Button style={{marginLeft:"10rem"}} type="primary" onClick = {handleSearch}>APPLY FILTER</Button>
+            {/* <p style={{marginTop:'-3rem',marginBottom:'7rem',float:'right',marginRight:'13rem'}}>clear filters</p> */}
         </Card>
-
-        <Card><h1 style={{color:"grey",marginLeft:"5px"}}>Projects</h1></Card>
          
-        <TableContainer component={Paper}>
+
+        <Card><h2 className='projects-subheading'>Projects</h2></Card>
+         <TableContainer component={Paper}>
          <Table >   
         <TableHead >   
           <TableRow >
-            <StyledTableCell className='table' >NAME</StyledTableCell>
-            <StyledTableCell className='table' align="left">CLIENT</StyledTableCell>
+            <StyledTableCell className='table' >NAME<span><ArrowDropUpIcon className="arrow-dropup" onClick={() => {setSortType('asc')}}/></span><span><ArrowDropDownIcon className='arrow-dropdown' onClick={() => {setSortType('desc')}}/></span></StyledTableCell>
+            <StyledTableCell className='table' align="left">CLIENT <span><ArrowDropUpIcon className="arrow-dropup" onClick={() => {setSortType('asc')}}/></span><span><ArrowDropDownIcon className='arrow-dropdown' onClick={() => {setSortType('desc')}}/></span></StyledTableCell>
             <StyledTableCell className='table' align="left">TRACKED</StyledTableCell>
             {/* <StyledTableCell className='table' align="left">ACCESS</StyledTableCell> */}
             {/* <StyledTableCell className='table' align="left">FAVOURITES</StyledTableCell> */}
           </TableRow>
         </TableHead>      
         <TableBody>
-          {rows.map((row) => (
-            <StyledTableRow key={row.name}>
+          {
+             userSearchData && userSearchData.length>0 ?
+             userSearchData.map(item => (
+            <StyledTableRow key={item.name}>
               <Link to ='/dummy'>
              <StyledTableCell component="th" scope="row" >
-                {row.name}
+                {item.name}
               </StyledTableCell> 
               </Link>
-              <StyledTableCell align="left">{row.client}</StyledTableCell>
-              <StyledTableCell align="left">{row.tracked}</StyledTableCell>
-              <StyledTableCell align="left">{row.access}</StyledTableCell>
+              <StyledTableCell align="left">{item.client}</StyledTableCell>
+              <StyledTableCell align="left">{item.tracked}</StyledTableCell>
+              <StyledTableCell align="left">{item.access}</StyledTableCell>
               {/* <StyledTableCell align="left">{row.favourites}</StyledTableCell> */}
             </StyledTableRow>    
-          ))}     
+          ))
+          : 'No data'
+        }
+                
         </TableBody>
       </Table>
     </TableContainer>
