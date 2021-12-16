@@ -109,7 +109,7 @@ function Clients() {
         ))}
       </ul>
 
-      <BootstrapTable />
+      {/* <BootstrapTable /> */}
 
 
 
